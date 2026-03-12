@@ -30,7 +30,7 @@ public struct iPhoneNumberField: UIViewRepresentable {
     /// This variable is used only if an `isEditing` binding was not provided in the initializer.
     @State private var internalIsFirstResponder: Bool = false
 
-    /// Whether or not the phone number field is editing. 💬
+    /// Whether or not the phone number field is editing.
     /// This variable uses `externalIsFirstResponder` binding variable if an `isEditing` binding was provided in the initializer, otherwise it uses the `internalIsFirstResponder` state variable.
     private var isFirstResponder: Bool {
         get { externalIsFirstResponder?.wrappedValue ?? internalIsFirstResponder }
@@ -43,38 +43,38 @@ public struct iPhoneNumberField: UIViewRepresentable {
         }
     }
 
-    /// The maximum number of digits the phone number field allows. 🔢
+    /// The maximum number of digits the phone number field allows.
     internal var maxDigits: Int?
 
-    /// The font of the phone number field. 🔡
+    /// The font of the phone number field.
     internal var font: UIFont?
 
-    /// The phone number field's "clear button" mode. 🚫
+    /// The phone number field's "clear button" mode.
     internal var clearButtonMode: UITextField.ViewMode = .never
 
     /// The text displayed in the phone number field when no number has been typed yet.
     /// Setting this `nil` will display a default phone number as the placeholder.
     private let placeholder: String?
 
-    /// Whether the country flag should be displayed in the phone number field. 🇦🇶
+    /// Whether the country flag should be displayed in the phone number field.
     internal var showFlag: Bool = false
 
-    /// Whether tapping the flag should show a sheet containing all of the country flags. 🏴‍☠️
+    /// Whether tapping the flag should show a sheet containing all of the country flags.
     internal var selectableFlag: Bool = false
 
-    /// Whether the country code should be automatically filled for the end user. ➕
+    /// Whether the country code should be automatically filled for the end user.
     internal var autofillPrefix: Bool = false
 
-    /// Whether the country code should be automatically displayed for the end user. 🎓
+    /// Whether the country code should be automatically displayed for the end user.
     internal var previewPrefix: Bool = false
 
-    /// Change the default prefix number by setting the region. 🇮🇷
+    /// Change the default prefix number by setting the region.
     internal var defaultRegion: String?
 
-    /// The color of the text of the phone number field. 🎨
+    /// The color of the text of the phone number field.
     internal var textColor: UIColor?
     
-    /// The color of the phone number field's cursor and highlighting. 🖍
+    /// The color of the phone number field's cursor and highlighting.
     internal var accentColor: UIColor?
 
     /// The color of the number (excluding country code) portion of the placeholder.
@@ -83,7 +83,7 @@ public struct iPhoneNumberField: UIViewRepresentable {
     /// The color of the country code portion of the placeholder color.
     internal var countryCodePlaceholderColor: UIColor?
 
-    /// The visual style of the phone number field. 🎀
+    /// The visual style of the phone number field.
     /// For now, this uses `UITextField.BorderStyle`. Updates on this modifier to come.
     internal var borderStyle: UITextField.BorderStyle = .none
     
@@ -93,54 +93,54 @@ public struct iPhoneNumberField: UIViewRepresentable {
     /// When set to `true`, the binding displays exactly what is in the text field.
     internal var formatted: Bool = true
 
-    /// An action to perform when editing on the phone number field begins. ▶️
+    /// An action to perform when editing on the phone number field begins.
     /// The closure requires a `UIViewType` parameter, which is the underlying `UIView`, that you can change each time this is called, if desired.
     internal var onBeginEditingHandler = { (view: UIViewType) in }
 
-    /// An action to perform when any characters in the phone number field are changed. 💬
+    /// An action to perform when any characters in the phone number field are changed.
     /// The closure requires a `UIViewType` parameter, which is the underlying `UIView`, that you can change each time this is called, if desired.
     internal var onEditingChangeHandler = { (view: UIViewType) in }
 
-    /// An action to perform when any characters in the phone number field are changed. ☎️
+    /// An action to perform when any characters in the phone number field are changed.
     /// The closure requires a `PhoneNumber` parameter, that you can change each time this is called, if desired.
     internal var onPhoneNumberChangeHandler = { (phoneNumber: PhoneNumber?) in }
 
-    /// An action to perform when editing on the phone number field ends. ⏹
+    /// An action to perform when editing on the phone number field ends.
     /// The closure requires a `UIViewType` parameter, which is the underlying `UIView`, that you can change each time this is called, if desired.
     internal var onEndEditingHandler = { (view: UIViewType) in }
     
-    /// An action to perform when the phone number field is cleared. ❌
+    /// An action to perform when the phone number field is cleared.
     /// The closure requires a `UIViewType` parameter, which is the underlying `UIView`, that you can change each time this is called, if desired.
     internal var onClearHandler = { (view: UIViewType) in }
     
-    /// An action to perform when the return key on the phone number field is pressed. ↪️
+    /// An action to perform when the return key on the phone number field is pressed.
     /// The closure requires a `UIViewType` parameter, which is the underlying `UIView`, that you can change each time this is called, if desired.
     internal var onReturnHandler = { (view: UIViewType) in }
 
-    /// A closure that requires a `UIViewType` object to be configured in the body. ⚙️
+    /// A closure that requires a `UIViewType` object to be configured in the body.
     public var configuration = { (view: UIViewType) in }
     
     @Environment(\.layoutDirection) internal var layoutDirection: LayoutDirection
     /// The horizontal alignment of the phone number field.
     internal var textAlignment: NSTextAlignment?
     
-    /// Whether the phone number field clears when editing begins. 🎬
+    /// Whether the phone number field clears when editing begins.
     internal var clearsOnBeginEditing = false
     
-    /// Whether the phone number field clears when text is inserted. 👆
+    /// Whether the phone number field clears when text is inserted.
     internal var clearsOnInsertion = false
     
-    /// Whether the phone number field is enabled for interaction. ✅
+    /// Whether the phone number field is enabled for interaction.
     internal var isUserInteractionEnabled = true
 
-    internal var phoneNumberKit: PhoneNumberKit
+    internal var phoneNumberKit: PhoneNumberUtility
     
     public init(
         _ title: String? = nil,
         text: Binding<String>,
         isEditing: Binding<Bool>? = nil,
         formatted: Bool = true,
-        phoneNumberKit: PhoneNumberKit = PhoneNumberKit(),
+        phoneNumberKit: PhoneNumberUtility = PhoneNumberUtility(),
         configuration: @escaping (UIViewType) -> () = { _ in }
     ) {
         self.placeholder = title
@@ -153,7 +153,7 @@ public struct iPhoneNumberField: UIViewRepresentable {
     }
 
     public func makeUIView(context: UIViewRepresentableContext<Self>) -> UIViewType {
-        let uiView = UIViewType(withPhoneNumberKit: phoneNumberKit)
+        let uiView = UIViewType(utility: phoneNumberKit)
         
         uiView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         uiView.addTarget(context.coordinator,
@@ -188,7 +188,9 @@ public struct iPhoneNumberField: UIViewRepresentable {
             uiView.withFlag = showFlag
             uiView.withDefaultPickerUI = selectableFlag
             uiView.withPrefix = previewPrefix
-            uiView.partialFormatter.defaultRegion = defaultRegion ?? PhoneNumberKit.defaultRegionCode()
+            if let defaultRegion {
+                uiView.partialFormatter.defaultRegion = defaultRegion
+            }
             if placeholder != nil {
                 uiView.placeholder = placeholder
             } else {
