@@ -317,7 +317,7 @@ public extension iPhoneNumberField {
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 isFirstResponder.wrappedValue = false
-                onBeginEditing(textField as! UIViewType)
+                onEndEditing(textField as! UIViewType)
             }
         }
         
