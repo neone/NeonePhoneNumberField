@@ -88,7 +88,7 @@ public extension FormatStyle where Self == PhoneNumberFormatStyle {
 
 // MARK: - Shared utility
 
-private extension PhoneNumberUtility {
+extension PhoneNumberUtility {
     /// A process-wide `PhoneNumberUtility` instance. Metadata is loaded from
     /// disk on first access, which is expensive; subsequent calls reuse the
     /// cached instance.
