@@ -16,7 +16,7 @@ public typealias NativeFontDescriptor = UIFontDescriptor
 #endif
 
 public extension NativeFont {
-    /// Initializes a `UIFont` using the same system initializer syntax available in `Font` 🔠🔡
+    /// Initializes a `UIFont` using the same system initializer syntax available in `Font`
         /// - Parameters:
         ///   - size: The font size as a `CGFloat`
         ///   - weight: Font weight from the `UIFont.Weight` types
