@@ -22,5 +22,11 @@ let package = Package(
             swiftSettings: [
                 .swiftLanguageMode(.v6)
             ]),
+        .testTarget(
+            name: "NeonePhoneNumberFieldTests",
+            dependencies: ["iPhoneNumberField"],
+            swiftSettings: [
+                .swiftLanguageMode(.v6)
+            ]),
     ]
 )
