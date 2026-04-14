@@ -74,11 +74,17 @@ public struct PhoneField: View {
                     selectable: selectableFlag,
                     action: { showPicker = true }
                 )
+                // Cap flag-button growth at xxLarge so accessibility Dynamic
+                // Type sizes don't push the text field off-screen; users can
+                // still see the current country and tap to open the full
+                // picker, which has no size restriction.
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             }
 
             TextField(placeholder, text: $text)
                 .keyboardType(.phonePad)
                 .textContentType(.telephoneNumber)
+                .accessibilityInputLabels([placeholder, "Phone number"])
                 .onChange(of: text) { _, newValue in
                     reformat(newValue)
                 }
@@ -89,6 +95,7 @@ public struct PhoneField: View {
         .sheet(isPresented: $showPicker) {
             PhoneCountryPicker(selection: $country)
         }
+        .sensoryFeedback(.selection, trigger: country)
     }
 
     private func reformat(_ input: String) {
