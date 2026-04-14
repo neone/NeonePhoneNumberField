@@ -85,13 +85,7 @@ private struct PhoneCountryRow: View {
 }
 
 #Preview {
-    PhoneCountryPickerPreview()
-}
+    @Previewable @State var selection = PhoneCountry.current ?? PhoneCountry(regionCode: "US", callingCode: 1)
 
-private struct PhoneCountryPickerPreview: View {
-    @State private var selection = PhoneCountry.current ?? PhoneCountry(regionCode: "US", callingCode: 1)
-
-    var body: some View {
-        PhoneCountryPicker(selection: $selection)
-    }
+    PhoneCountryPicker(selection: $selection)
 }
